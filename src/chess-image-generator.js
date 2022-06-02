@@ -16,13 +16,13 @@ const {
   defaultStyle,
   filePaths,
 } = require("./config/index");
+
 /**
  *
  * @typedef {object} Options
  * @property {number} [size] Pixel length of desired image
  * @property {string} [light] Color of light squares
  * @property {string} [dark] Color of dark squares
- * @property {string} [highlight] Color of highlight overlay
  * @property {"merida"|"alpha"|"cheq"} [style] Desired style of pieces
  * @property {boolean} [flipped] Whether the board is to be flipped or not
  */
@@ -38,7 +38,6 @@ function ChessImageGenerator(options = {}) {
   this.padding = options.padding || defaultPadding;
   this.light = options.light || defaultLight;
   this.dark = options.dark || defaultDark;
-  this.highlight = options.highlight || defaultHighlight;
   this.style = options.style || defaultStyle;
   this.flipped = options.flipped || false;
 
@@ -95,7 +94,7 @@ ChessImageGenerator.prototype = {
 
   /**
    * Set which squares should be highlighted
-   * @param {string[]} array chess square coordinate array
+   * @param {{highlight: string, coords: string}[]} array chess square coordinate array
    */
   highlightSquares(array) {
     this.highlightedSquares = array;
@@ -137,7 +136,8 @@ ChessImageGenerator.prototype = {
           ctx.fill();
         }
 
-        if (this.highlightedSquares.includes(coords)) {
+        const coord_highlight = this.highlightedSquares.find(hs => hs.coord === coords);
+        if (coord_highlight) {
           ctx.beginPath();
           ctx.rect(
             ((this.size / 8) * (7 - j + 1) - this.size / 8) + this.padding[3],
@@ -145,7 +145,7 @@ ChessImageGenerator.prototype = {
             this.size / 8,
             this.size / 8
           );
-          ctx.fillStyle = this.highlight;
+          ctx.fillStyle = coord_highlight.color;
           ctx.fill();
         }
 

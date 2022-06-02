@@ -176,11 +176,11 @@ Piece notation follows the same rules as [FEN](#loading-by-fen).
 ```
 | Parameter    | Type     | Description          |
 |---------|----------|----------------------|
-| array | `array of strings` | Array of coordinates to highlight. |
+| array | `array of objects` | Array of objects with coordinates to highlight and desired color. |
 
 ### Example:
 ```
-imageGenerator.highlightSquares(["e4", "e5"])
+imageGenerator.highlightSquares([{coord: "e4", color: "#a2dedc66"}, {coord: "e5", "#a2dedc66"}])
 ```
 
 # Generate an Image
@@ -278,9 +278,8 @@ The resulting PNG's will have a padding of 10px on each side, increasing the ima
 |----------|----------|---------|------------------|
 | light     | `string` | *"rgb(240, 217, 181)"* | *"rgb(250,250,250)", "white", "#ffffff"* |
 | dark     | `string` | *"rgb(181, 136, 99)"* | *"rgb(0,0,0)", "black", "#000000"* |
-| highlight | `string` | *"rgba(235, 97, 80, 0.8)"* | *"rgb(255,0,0)", "red", "#ff0000"* |
 
-Light and dark determines the colors of both the light and dark squares respectively. Highlight determines the color overlaid on top of any highlighted squares (using a RGBA value with some transparency is recommended so that light and dark squares are still distinguishable from one another if highlighted).
+Light and dark determines the colors of both the light and dark squares respectively.
 
 Colors can be passed in a variety of formats:
 
